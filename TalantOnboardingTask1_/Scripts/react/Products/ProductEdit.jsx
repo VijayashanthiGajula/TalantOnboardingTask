@@ -21,7 +21,7 @@ export default class ProductEdit extends Component {
         return (
             <React.Fragment>
                 <Modal open={this.props.showUpdateModel} onClose={this.props.onClose} size='small'>
-                    <br />  <br />  <br />    <br />  <br />  <br />
+                 
                     <Modal.Header> Edit Product </Modal.Header>
                     <Modal.Content>
                         <Form>

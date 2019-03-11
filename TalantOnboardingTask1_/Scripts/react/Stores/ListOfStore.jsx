@@ -64,7 +64,10 @@ export default class Storetable extends Component {
             type: "GET",
             data: { 'id': id },
             success: function (data) {
-                this.setState({ StoreId: data.Id, StoreName: data.Name, StoreAddress: data.Address })
+                var obj = JSON.parse(data);
+                this.setState({ StoreId: obj.Id, StoreName: obj.Name, StoreAddress: obj.Address })
+
+               // this.setState({ StoreId: data.Id, StoreName: data.Name, StoreAddress: data.Address })
             }.bind(this)
         });
     }
@@ -99,7 +102,11 @@ export default class Storetable extends Component {
             type: "GET",
             data: { 'id': id },
             success: function (data) {
-                this.setState({ StoreId: data.Id, StoreName: data.Name, StoreAddress: data.Address })
+                var obj = JSON.parse(data);
+                this.setState({ StoreId: obj.Id, StoreName: obj.Name, StoreAddress: obj.Address })
+
+
+               // this.setState({ StoreId: data.Id, StoreName: data.Name, StoreAddress: data.Address })
             }.bind(this)
         });
     }
@@ -163,7 +170,7 @@ export default class Storetable extends Component {
                 <StoreDelete />
 
 
-                <div><button class="ui primary button" onClick={this.showCreateModel}>New Sale</button></div>
+                <div><button class="ui primary button" onClick={this.showCreateModel}>New Store</button></div>
                 <StoreEdit onChange={this.onChange} update={this.state.updateId} onClose={this.closeUpdateModel} onUpdateSubmit={this.onUpdateSubmit} showUpdateModel={this.state.showUpdateModel} Id={this.state.StoreId} Name={this.state.StoreName} Address={this.state.StoreAddress}  />
 
                 <StoreDelete delete={this.state.deleteId} onClose={this.closeDeleteModal} onDeleteSubmit={this.onDeleteSubmit} showDeleteModal={this.state.showDeleteModal} Id={this.state.StoreId} Name={this.state.StoreName} Address={this.state.StoreAddress} />

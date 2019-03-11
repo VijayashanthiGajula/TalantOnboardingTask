@@ -7,9 +7,9 @@ export default class CustomerEdit extends Component {
         super(props);
         this.state = {
 
-            CustomerId: '',
-            CustomerName: '',
-            CustomerAddress: '',
+            //CustomerId: '',
+            //CustomerName: '',
+            //CustomerAddress: '',
         };
 
         this.onClose = this.onClose.bind(this);
@@ -26,7 +26,7 @@ export default class CustomerEdit extends Component {
              
 
                 <Modal open={this.props.showUpdateModel} onClose={this.props.onClose} size='small'>
-                    <br /><br /><br /><br /><br />
+                   
                     <Modal.Header> Edit Customer </Modal.Header>
                     <Modal.Content>
                     <form className="ui form segment">
@@ -43,8 +43,8 @@ export default class CustomerEdit extends Component {
                         </Modal.Content>
                     <Modal.Actions>
                
-                <button class="ui secondary button" onClick={this.props.onClose}>Cancel</button>
-                    <button class="ui green button" onClick={this.props.onUpdateSubmit}>Update <i className="check icon"></i></button>
+                <button className="ui secondary button" onClick={this.props.onClose}>Cancel</button>
+                    <button className="ui green button" onClick={this.props.onUpdateSubmit}>Update <i className="check icon"></i></button>
                     </Modal.Actions>
                         </Modal>
             </React.Fragment>

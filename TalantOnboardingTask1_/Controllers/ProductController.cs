@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TalantOnboardingTask1_.Models;
+using Newtonsoft.Json;
 
 namespace TalantOnboardingTask1_.Controllers
 {
@@ -20,8 +21,13 @@ namespace TalantOnboardingTask1_.Controllers
         public JsonResult ProductList()
         {
             TalentEntities db = new TalentEntities();
-            var ProductList = db.Product_.ToList();
-            return new JsonResult { Data = ProductList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            var ProductList = db.Product_.Select(x => new ProductModel {
+                Id = x.Id,
+                Name = x.Name,
+                Price = x.Price
+            }).ToList();
+            return Json(ProductList, JsonRequestBehavior.AllowGet);
+            //return new JsonResult { Data = ProductList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
         //Create
@@ -38,8 +44,13 @@ namespace TalantOnboardingTask1_.Controllers
         {
 
             TalentEntities db = new TalentEntities();
-            var Prod = db.Product_.Where(x => x.Id == id).SingleOrDefault();           
-            return new JsonResult { Data = Prod, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            var Prod = db.Product_.Where(x => x.Id == id).SingleOrDefault();
+            string value = JsonConvert.SerializeObject(Prod, Formatting.Indented, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
+            return new JsonResult { Data = value, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
         public JsonResult DeleteProduct(int id)
@@ -60,8 +71,12 @@ namespace TalantOnboardingTask1_.Controllers
         {
 
             TalentEntities db = new TalentEntities();
-            var Product = db.Product_.Where(x => x.Id == id).FirstOrDefault();
-            return new JsonResult { Data = Product, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            Product_ Prod= db.Product_.Where(x => x.Id == id).SingleOrDefault();
+            string value = JsonConvert.SerializeObject(Prod, Formatting.Indented, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return new JsonResult { Data = value, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
         public JsonResult Edit(Product_ p)

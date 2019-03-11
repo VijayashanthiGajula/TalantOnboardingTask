@@ -32,7 +32,6 @@ export default class StoreDelete extends Component {
         return (
             <React.Fragment>
                 <Modal open={this.props.showDeleteModal} onClose={this.props.onClose} size='small'>
-                    <br />  <br />  <br />    <br />  <br />  <br />
                     <Modal.Header>Delete Store</Modal.Header>
                     <Modal.Content>
                         <h4>

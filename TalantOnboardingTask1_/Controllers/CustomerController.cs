@@ -4,12 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TalantOnboardingTask1_.Models;
+using Newtonsoft.Json;
 
 namespace TalantOnboardingTask1_.Controllers
 {
     public class CustomerController : Controller
     {
-       
+        
         public ActionResult Index()
         {
             return View();
@@ -18,8 +19,14 @@ namespace TalantOnboardingTask1_.Controllers
         public JsonResult CustomerList()
         {
             TalentEntities db = new TalentEntities();
-            var customerList = db.Customer_.ToList();
-            return new JsonResult { Data = customerList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            var customerList = db.Customer_.Select( x => new CustomerModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Address = x.Address
+            }).ToList();
+            return Json(customerList, JsonRequestBehavior.AllowGet);
+            //return new JsonResult { Data = customerList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
 
@@ -46,9 +53,13 @@ namespace TalantOnboardingTask1_.Controllers
         {
 
             TalentEntities db = new TalentEntities();
-            var customer = db.Customer_.Where(x => x.Id == id).SingleOrDefault();          
-
-            return new JsonResult { Data = customer, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            var customer = db.Customer_.Where(x => x.Id == id).SingleOrDefault();
+            string value = JsonConvert.SerializeObject(customer, Formatting.Indented, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+         //   return Json(value, JsonRequestBehavior.AllowGet);
+            return new JsonResult { Data = value, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
         public JsonResult DeleteCustomer(int id)
@@ -71,16 +82,23 @@ namespace TalantOnboardingTask1_.Controllers
         {
 
             TalentEntities db = new TalentEntities();
-            var customer = db.Customer_.Where(x => x.Id == id).SingleOrDefault();
-            return new JsonResult { Data = customer, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            Customer_ customer = db.Customer_.Where(x => x.Id == id).SingleOrDefault();
+            string value = JsonConvert.SerializeObject(customer, Formatting.Indented, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return Json(value, JsonRequestBehavior.AllowGet);
+            //return new JsonResult { Data = customer, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
         public JsonResult Edit(Customer_ c)
         {
 
             TalentEntities db = new TalentEntities();
-            var cust = db.Customer_.Where(x => x.Id == c.Id).SingleOrDefault();
-            cust.Id = c.Id;
+            Customer_ cust = db.Customer_.Where(x => x.Id == c.Id).SingleOrDefault();
+
+
+           
             cust.Name = c.Name;
             cust.Address = c.Address;
             db.SaveChanges();

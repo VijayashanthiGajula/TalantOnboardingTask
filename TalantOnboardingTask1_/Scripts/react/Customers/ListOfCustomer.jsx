@@ -4,24 +4,13 @@ import CustomerCreate from './CustomerCreate.jsx';
 import CustomerDelete from './CustomerDelete.jsx';
 import CustomerEdit from './CustomerEdit.jsx';
 
+
 export default class CustomerTable extends Component {
     constructor() {
         super();
         this.state = {
             CustomerLists: [],
-            //Success: { Data: '' },
-
-            //showDeleteModal: false,
-            //deleteId: 0,
-
-            //showCreateModel: false,
-
-            //CustomerId: '',
-            //CustomerName: '',
-            //CustomerAddress: '',
-
-            //showUpdateModel: false,
-            //updateId: 0,
+        
 
 
 
@@ -72,6 +61,8 @@ export default class CustomerTable extends Component {
             type: "GET",
             data: { 'id': id },
             success: function (data) {
+                var obj = JSON.parse(data);
+                this.setState({ CustomerId: obj.Id, CustomerName: obj.Name, CustomerAddress: obj.Address })
                 this.setState({ CustomerId: data.Id, CustomerName: data.Name, CustomerAddress: data.Address })
             }.bind(this)
         });
@@ -90,7 +81,7 @@ export default class CustomerTable extends Component {
 
     closeCreateModel() {
         this.setState({ showCreateModel: false });
-        this.setState({ updateId: id });
+    
        window.location.reload()
     }
 
@@ -109,7 +100,9 @@ export default class CustomerTable extends Component {
             type: "GET",
             data: { 'id': id },
             success: function (data) {
-                this.setState({ CustomerId: data.Id, CustomerName: data.Name, CustomerAddress: data.Address })
+                var obj = JSON.parse(data);
+                this.setState({ CustomerId: obj.Id, CustomerName: obj.Name, CustomerAddress: obj.Address })
+                //this.setState({ CustomerId: data.Id, CustomerName: data.Name, CustomerAddress: data.Address })
             }.bind(this)
         });
 
@@ -154,7 +147,7 @@ export default class CustomerTable extends Component {
                     <td className="four wide">
 
 
-                        <button class="ui yellow button" onClick={this.showUpdateModel.bind(this, customer.Id)}><i className="edit icon"></i>Edit</button>
+                        <button className="ui yellow button" onClick={this.showUpdateModel.bind(this, customer.Id)}><i className="edit icon"></i>Edit</button>
 
 
 
@@ -163,7 +156,7 @@ export default class CustomerTable extends Component {
 
 
                     <td className="four wide">
-                        <button class="ui red button" onClick={this.handleDelete.bind(this, customer.Id)} ><i className="delete icon"></i>Delete</button>
+                        <button className="ui red button" onClick={this.handleDelete.bind(this, customer.Id)} ><i className="delete icon"></i>Delete</button>
 
 
                     </td>
@@ -179,7 +172,7 @@ export default class CustomerTable extends Component {
             <React.Fragment>
                 <div>
                     <br /><br />
-                    <button class="ui primary button" onClick={this.showCreateModel}>New Customer</button>
+                    <button className="ui primary button" onClick={this.showCreateModel}>New Customer</button>
 
 
                     <CustomerCreate onChange={this.onChange} onClose={this.closeCreateModel} onCreateSubmit={this.onCreateSubmit} showCreateModel={this.state.showCreateModel} />

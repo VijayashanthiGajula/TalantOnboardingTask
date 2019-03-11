@@ -50,7 +50,7 @@ export default class StoreCreate extends Component {
         return (
             <React.Fragment>
                 <Modal open={this.props.showCreateModel} onClose={this.props.onClose} size='small'>
-                    <br /><br /><br /><br /><br />
+                   
                     <Modal.Header> Create Store </Modal.Header>
                     <Modal.Content>
                         <Form>

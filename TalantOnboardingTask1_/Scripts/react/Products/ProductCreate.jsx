@@ -50,7 +50,7 @@ export default class ProductCreate extends Component {
         return (
             <React.Fragment>
                 <Modal open={this.props.showCreateModel} onClose={this.props.onClose} size='small'>
-                    <br /><br /><br /><br /><br />
+                   
                     <Modal.Header> Create New Product </Modal.Header>
                     <Modal.Content>
                         <Form>

@@ -52,7 +52,10 @@ export default class ProductTable extends Component {
             type: "GET",
             data: { 'id': id },
             success: function (data) {
-                this.setState({ ProductId: data.Id, ProductName: data.Name, ProductPrice: data.Price })
+                var obj = JSON.parse(data);
+                this.setState({ ProductId: obj.Id, ProductName: obj.Name, ProductPrice: obj.Price })
+
+                //this.setState({ ProductId: data.Id, ProductName: data.Name, ProductPrice: data.Price })
             }.bind(this)
         });
     }
@@ -87,7 +90,11 @@ export default class ProductTable extends Component {
             type: "GET",
             data: { 'id': id },
             success: function (data) {
-                this.setState({ ProductId: data.Id, ProductName: data.Name, ProductPrice: data.Price })
+
+                var obj = JSON.parse(data);
+                  this.setState({ ProductId: obj.Id, ProductName: obj.Name, ProductPrice: obj.Price })
+
+                //this.setState({ ProductId: data.Id, ProductName: data.Name, ProductPrice: data.Price })
             }.bind(this)
         });
     }

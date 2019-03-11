@@ -34,9 +34,9 @@ export default class CustomerDelete extends Component {
     render() {
         return (
             <React.Fragment>
-                
+
                 <Modal open={this.props.showDeleteModal} size="small">
-                    <br />  <br />  <br />    <br />  <br />  <br />
+              
                     <Modal.Header>Delete Customer</Modal.Header>
                     <Modal.Content>
                         <h4>
