@@ -1,4 +1,4 @@
-﻿
+
 import React, { Component } from 'react';
 import { Modal, Form, Button } from 'semantic-ui-react';
 import ReactDOM from 'react-dom';
@@ -13,7 +13,11 @@ export default class Saletable extends Component {
         super();
         this.state = {
             salelists: [{ Id: '', DateSold: '', CustomerName: '', ProductName: '', StoreName: '' }],
-
+            Id: '',
+            ProductId: '',
+            StoreId: '',
+            CustomerId: '',
+            DateSold: '',
 
         };
 
@@ -87,6 +91,7 @@ export default class Saletable extends Component {
     showUpdateModel(id) {
         this.setState({ showUpdateModel: true });
         this.setState({ updateId: id });
+       
 
         $.ajax({
             url: "/Sale/GetEdit",
@@ -99,16 +104,10 @@ export default class Saletable extends Component {
                     CustomerId: obj.CustomerId,
                     ProductId: obj.ProductId,
                     StoreId: obj.StoreId,
-                    DateSold: this.DateConverter(obj.DateSold)
+                    DateSold: this.DateConverter(obj.DateSold) 
                 })
                
-                //this.setState({
-                //    SaleId: data.Id,
-                //    CustomerId: data.CustomerId,
-                //    ProductId: data.ProductId,
-                //    StoreId: data.StoreId,
-                //    DateSold: this.DateConverter(data.DateSold)
-                //}),
+            
                 
             }.bind(this)
         });
@@ -122,11 +121,11 @@ export default class Saletable extends Component {
   
     onUpdateSubmit() {
             let data = {
-
-                ProductId: this.state.ProductId,
-                CustomerId: this.state.CustomerId,
-                StoreId: this.state.StoreId,
-                DateSold: this.state.DateSold
+                'Id': this.state.updateId,
+                'ProductId': this.state.ProductId,
+                'CustomerId': this.state.CustomerId,
+                'StoreId': this.state.StoreId,
+                'DateSold': this.state.DateSold,
             };
 
             $.ajax({
@@ -191,7 +190,7 @@ export default class Saletable extends Component {
 
                     <SaleDelete delete={this.state.deleteId} onClose={this.closeDeleteModal} onDeleteSubmit={this.onDeleteSubmit} showDeleteModal={this.state.showDeleteModal} />
 
-                    <SaleEdit onChange={this.onChange} update={this.state.updateId} onClose={this.closeUpdateModel} onUpdateSubmit={this.onUpdateSubmit} showUpdateModel={this.state.showUpdateModel}
+                    <SaleEdit onChange={this.onChange} update={this.state.updateId} onClose={this.closeUpdateModel} onUpdateSubmit={this.onUpdateSubmit } showUpdateModel={this.state.showUpdateModel}
                         Id={this.state.Id} ProductId={this.state.ProductId} CustomerId={this.state.CustomerId} StoreId={this.state.StoreId} DateSold={this.state.DateSold} />
 
 
@@ -219,110 +218,3 @@ export default class Saletable extends Component {
 
     }
 }
-
-
-
-
-
-
-//...........................................................................................................................
-//............................................................................................................................
-//import React, { Component } from 'react';
-//import ReactDOM from 'react-dom';
-//import { Button, Icon } from 'semantic-ui-react';
-
-//export default class Saletable extends Component {
-//    constructor(props) {
-//        super(props);
-//        this.state = {
-//            sales: [
-//                {
-//                    id: '', customerId: '', productId: '', storeId: '', dateSold: ''
-//                }
-//            ],
-//            salesId: 0,
-//            showDelete: false,
-//            showCreate: false,
-//            showUpdate: false,
-//        };
-//        this.loadData = this.loadData.bind(this);
-
-
-//    }
-
-//    componentDidMount() {
-//        this.loadData();
-
-//    }
-
-   
-
-
-//    loadData() {
-//        $.ajax({
-//            url: "/Sale/SalesList",
-//            type: "GET",
-           
-//            success: function (data) {
-//                this.setState({ sales: data });
-
-//            }.bind(this),
-//            error: function (jqXHR) {
-//                console.log(jqXHR);
-
-//            }.bind(this)
-//        });
-//    }
-
-
-
-//    render() {
-//        let salesList = this.state.sales;
-//        let tableData = null;
-//        if (salesList != "") {
-//            tableData = salesList.map((item, index) => (
-//                <tr key={item.id}>
-//                    <td className="two wide">{item.customerId}</td>
-//                    <td className="two wide">{item.productId}</td>
-//                    <td className="two wide">{item.storeId}</td>
-//                    <td className="two wide">{item.dateSold}</td>
-//                    <td className="two wide"><button>Edit</button></td>
-//                    <td className="two wide"><button>Delete</button></td>
-//                </tr>
-
-
-//            )
-//            )
-//        }
-
-
-//        return (
-
-//            <React.Fragment>
-//                <div>
-//                    <br />  <br />  <br />  <br />  
-//                    <Button>New Sales</Button>
-//                    <table className="ui striped table">
-//                        <thead>
-//                            <tr>
-//                                <th className="two wide">Customer</th>
-//                                <th className="two wide">Product</th>
-//                                <th className="two wide">Store</th>
-//                                <th className="two wide">Date Sold</th>
-//                                <th className="two wide">Action</th>
-//                                <th className="two wide">Action</th>
-//                            </tr>
-//                        </thead>
-//                        <tbody>
-//                            {tableData}
-//                        </tbody>
-//                    </table>
-
-//                </div>
-//            </React.Fragment>
-//        );
-//    }
-
-//}
-
-
