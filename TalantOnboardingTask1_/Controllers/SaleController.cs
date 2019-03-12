@@ -101,35 +101,33 @@ namespace TalantOnboardingTask1_.Controllers
             return new JsonResult { Data = value, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
         }
-        public JsonResult Edit(Sales_ s)
+         public JsonResult Edit(Sales_ s)
         {
             {
+                try
+                {
+                    TalentEntities db = new TalentEntities();
+                    Sales_ sales = db.Sales_.Where(x => x.Id == s.Id).SingleOrDefault();
 
-                TalentEntities db = new TalentEntities();
-                Sales_ sales = db.Sales_.Where(x => x.Id == s.Id).SingleOrDefault();
 
-                //sales.Customer_.Id = s.Customer_.Id;
-                //sales.Product_.Id = s.Product_.Id;
-                //sales.Store_.Id = s.Store_.Id;
-                //sales.DateSold = s.DateSold;
-                //db.SaveChanges();
+                    sales.CustomerId = s.CustomerId;
+                    sales.ProductId = s.ProductId;
+                    sales.StoreId = s.StoreId;
+                    sales.DateSold = s.DateSold;
 
-                sales.CustomerId = s.CustomerId;
-                sales.ProductId = s.ProductId;
-                sales.StoreId = s.StoreId;
-                sales.DateSold = s.DateSold;
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Console.Write(e.Data + "Exception Occured");
+                    return new JsonResult { Data = "Sale Update Failed", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
 
-                db.SaveChanges();
+                return new JsonResult { Data = "Success", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
             }
-
-            return new JsonResult { Data = "Success", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-
         }
     }
-
-
-
-
 }
 
 
