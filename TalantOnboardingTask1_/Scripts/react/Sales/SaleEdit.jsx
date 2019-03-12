@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Modal, Button, Form } from 'semantic-ui-react';
 
@@ -39,7 +39,7 @@ export default class SaleEdit extends Component {
 
     CustomersDropdown() {
         $.ajax({
-            url: "/Sale/SalesList",
+            url: "/Sale/CustomerList",
             type: "GET",
             success: function (data) {
                 this.setState({ CustomerDropdownList: data })
